@@ -172,3 +172,9 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+deploy/docker-compose.yml
+deploy/Dockerfile
+tests/conftest.py
+app/db/session.py
+alembic.ini
