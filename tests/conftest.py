@@ -1,4 +1,3 @@
-import asyncio
 from pathlib import Path
 
 import pytest
@@ -8,35 +7,20 @@ from alembic.config import Config
 from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
+from app.config import db_config
 from app.db.session import get_session
 from app.main import app
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-ALEMBIC_INI_PATH = BASE_DIR / "alembic.ini"
-MIGRATIONS_PATH = BASE_DIR / "migrations"
-
-
-TEST_DATABASE_URL = "url"
-
-
-engine = create_async_engine(TEST_DATABASE_URL, echo=True)
-TestingSessionLocal = async_sessionmaker(bind=engine)
-
-
-@pytest.fixture(scope="session")
-def event_loop():
-    loop = asyncio.new_event_loop()
-    yield loop
-    loop.close()
 
 
 @pytest.fixture(scope="session")
 def init_db():
-    alembic_cfg = Config(str(ALEMBIC_INI_PATH))
+    base_dir = Path(__file__).resolve().parent.parent
+
+    alembic_cfg = Config(str(base_dir / "alembic.ini"))
     alembic_cfg.set_main_option(
-        "sqlalchemy.url", TEST_DATABASE_URL.replace("+asyncpg", "")
+        "sqlalchemy.url", db_config.database_url.replace("+asyncpg", "") + "-test"
     )
-    alembic_cfg.set_main_option("script_location", str(MIGRATIONS_PATH))
+    alembic_cfg.set_main_option("script_location", str(base_dir / "migrations"))
 
     command.upgrade(alembic_cfg, "head")
     yield
@@ -45,7 +29,10 @@ def init_db():
 
 @pytest_asyncio.fixture(scope="function")
 async def db_session(init_db):
-    async with TestingSessionLocal() as session:
+    engine = create_async_engine(db_config.database_url + "-test", echo=True)
+    testing_session_local = async_sessionmaker(bind=engine)
+
+    async with testing_session_local() as session:
         yield session
 
 

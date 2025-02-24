@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   db:
     image: postgres:latest
@@ -12,15 +10,3 @@ services:
       - "5432:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
-
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: postgres@db.db
-      PGADMIN_DEFAULT_PASSWORD: postgres
-      PGADMIN_LISTEN_PORT: 5050
-      PGADMIN_LISTEN_ADDRESS: 0.0.0.0
-      PGADMIN_ENHANCED_SECURITY: "False"
-    ports:
-      - "5050:5050"

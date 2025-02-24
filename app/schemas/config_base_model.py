@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 def alias_generator(s: str) -> str:
@@ -8,6 +8,4 @@ def alias_generator(s: str) -> str:
 
 
 class Schema(BaseModel):
-    class Config:
-        populate_by_name = True
-        alias_generator = alias_generator
+    model_config = ConfigDict(populate_by_name=True, alias_generator=alias_generator)
