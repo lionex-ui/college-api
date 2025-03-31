@@ -10,3 +10,16 @@ services:
       - "5432:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: postgres
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
