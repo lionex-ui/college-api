@@ -4,7 +4,7 @@ from app.config import db_config
 
 engine = create_async_engine(
     db_config.database_url,
-    echo=True,
+    echo=False,
 )
 AsyncSessionLocal = async_sessionmaker(
     bind=engine,

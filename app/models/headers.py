@@ -11,6 +11,4 @@ class HeadersModel(Base):
     header_name: Mapped[str] = mapped_column(String(100), unique=True)
     header_url: Mapped[str | None] = mapped_column(String(2048))
 
-    tabs = relationship(
-        "HeaderTabsModel", back_populates="header", passive_deletes=True
-    )
+    tabs = relationship("HeaderTabsModel", back_populates="header", passive_deletes=True)

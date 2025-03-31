@@ -1,4 +1,6 @@
-from app.models.header_tabs import HeaderTabsModel
-from app.models.headers import HeadersModel
+from .blocks import BlocksModel
+from .header_tabs import HeaderTabsModel
+from .headers import HeadersModel
+from .pages import PagesModel
 
-__all__ = ["HeaderTabsModel", "HeadersModel"]
+__all__ = ["BlocksModel", "HeaderTabsModel", "HeadersModel", "PagesModel"]
