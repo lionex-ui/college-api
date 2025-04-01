@@ -3,9 +3,9 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_USER: wKJxPABOyrXQySLiLyr
+      POSTGRES_PASSWORD: TirLRkNjXHHw
+      POSTGRES_DB: college
     ports:
       - "5432:5432"
     volumes:
@@ -15,8 +15,8 @@ services:
     image: dpage/pgadmin4:latest
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: postgres
-      PGADMIN_DEFAULT_PASSWORD: postgres
+      PGADMIN_DEFAULT_EMAIL: developer@spfc.kr.ua
+      PGADMIN_DEFAULT_PASSWORD: jDMHlQGfDOgE
     ports:
       - "8080:80"
     depends_on:
