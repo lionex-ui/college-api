@@ -40,5 +40,5 @@ def custom_openapi():
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 
-
+print(1)
 app.openapi = custom_openapi
