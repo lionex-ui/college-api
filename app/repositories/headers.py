@@ -42,17 +42,10 @@ class HeadersRepository:
         self.session.add_all(new_tabs)
         await self.session.commit()
 
-    async def get(self) -> list[HeadersSchema]:
+    async def get(self) -> list[HeadersModel]:
         result = await self.session.execute(
             select(HeadersModel).options(selectinload(HeadersModel.tabs)).order_by(HeadersModel.id)
         )
         headers = result.scalars().all()
 
-        return [
-            HeadersSchema(
-                header_name=header.header_name,
-                header_url=header.header_url,
-                tabs=[HeaderTabsSchema(tab_name=tab.tab_name, tab_url=tab.tab_url) for tab in header.tabs],
-            )
-            for header in headers
-        ]
+        return list(headers)

@@ -32,21 +32,13 @@ class PagesRepository:
 
         return page_urls
 
-    async def get_full_page_date(self, page_url: str) -> PagesSchema:
+    async def get_full_page_date(self, page_url: str) -> PagesModel | None:
         result = await self.session.execute(
             select(PagesModel).options(selectinload(PagesModel.blocks)).filter(PagesModel.url == page_url)
         )
         page = result.scalar()
 
-        page_schema = PagesSchema(
-            url=page.url,
-            content=[
-                BlocksSchema(block_id=block.block_id, content=block.content, type=block.type) for block in page.blocks
-            ],
-        )
-        page_schema.content.sort(key=lambda block: int(block.block_id.strip(":r")))
-
-        return page_schema
+        return page
 
     async def delete(self, page_url: str) -> None:
         await self.session.execute(delete(PagesModel).filter(PagesModel.url == page_url))

@@ -9,7 +9,8 @@ class UsersSchema(Schema):
 
 
 class LoggedInResponse(Schema):
-    message: str = "Successfully logged in"
+    access_token: str = Field(alias="accessToken")
+    refresh_token: str = Field(alias="refreshToken")
 
 
 class UserNotFoundError(Schema):
@@ -18,3 +19,19 @@ class UserNotFoundError(Schema):
 
 class WrongPasswordError(Schema):
     message: str = "Wrong password"
+
+
+class UserCreatedResponse(Schema):
+    message: str = "User created successfully"
+
+
+class UsernameAlreadyExistsError(Schema):
+    message: str = "Username already exists"
+
+
+class UserDeletedResponse(Schema):
+    message: str = "User deleted successfully"
+
+
+class NoPrivilegeError(Schema):
+    message: str = "No privilege"
